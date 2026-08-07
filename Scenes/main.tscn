@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://duwbx8rv8k335"]
 
-[sub_resource type="GDScript" id="GDScript_7u77a"]
-script/source = "extends Node2D
+[ext_resource type="Script" uid="uid://cb84ebujqpacf" path="res://Scenes/controls.gd" id="1_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://iydna04xdvyi" path="res://player.png" id="1_jjgbg"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
+height = 34.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+[node name="Node2D" type="Node2D" unique_id=1776810823]
 
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=811999216]
+script = ExtResource("1_bo1nx")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=769571223]
+texture = ExtResource("1_jjgbg")
 
-[node name="Main" type="Node2D" unique_id=1824716094]
-script = SubResource("GDScript_7u77a")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1638953004]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_bo1nx")
