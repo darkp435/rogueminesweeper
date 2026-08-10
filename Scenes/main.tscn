@@ -1,19 +1,44 @@
 [gd_scene format=3 uid="uid://duwbx8rv8k335"]
 
+[ext_resource type="Script" uid="uid://cjh4g1mgk5iqo" path="res://main.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://cb84ebujqpacf" path="res://Scenes/controls.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://iydna04xdvyi" path="res://player.png" id="1_jjgbg"]
+[ext_resource type="Texture2D" uid="uid://bpymabqmkpf8k" path="res://unrevealed.png" id="4_jjvhh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
 height = 34.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kry3j"]
+size = Vector2(20.5, 19)
+
 [node name="Node2D" type="Node2D" unique_id=1776810823]
+script = ExtResource("1_8gbba")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=811999216]
 script = ExtResource("1_bo1nx")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=769571223]
+z_index = 4096
+position = Vector2(-1.0000019, 0.9999999)
+scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("1_jjgbg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1638953004]
-position = Vector2(1, 0)
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_bo1nx")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=719525719]
+zoom = Vector2(5, 5)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=653113668]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2133531944]
+position = Vector2(-52.25, 10)
+shape = SubResource("RectangleShape2D_kry3j")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1493481332]
+position = Vector2(-51.75, 10)
+scale = Vector2(0.772, 0.754)
+texture = ExtResource("4_jjvhh")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

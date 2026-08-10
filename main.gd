@@ -2,6 +2,7 @@ extends Node
 
 var grid = []
 var rng = RandomNumberGenerator.new()
+var sprite_size = 30
 
 enum SquareState {
 	Safe,
@@ -42,10 +43,22 @@ func generate_grid(x: int, y: int, mines: int):
 	for mine in mines_list:
 		grid[mine.y][mine.x] = SquareState.Mine
 
+func draw_grid():
+	for row in grid:
+		for square in grid:
+			var area = Area2D.new()
+			var sprite = Sprite2D.new()
+			var collision_shape = CollisionShape2D.new()
+			
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	generate_grid(10, 10, 10)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("Entered!")
