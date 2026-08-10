@@ -12,7 +12,7 @@ config_version=5
 
 config/name="RogueMinesweeper"
 run/main_scene="uid://duwbx8rv8k335"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [input]

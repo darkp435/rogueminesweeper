@@ -2,7 +2,7 @@ extends Node
 
 var grid = []
 var rng = RandomNumberGenerator.new()
-var sprite_size = 30
+const sprite_texture = Texture2D.new()
 
 enum SquareState {
 	Safe,
@@ -49,7 +49,8 @@ func draw_grid():
 			var area = Area2D.new()
 			var sprite = Sprite2D.new()
 			var collision_shape = CollisionShape2D.new()
-			
+			# Sprite is 32 pixels
+			sprite.texture = 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
