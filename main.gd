@@ -2,14 +2,14 @@ extends Node
 
 var grid = []
 var rng = RandomNumberGenerator.new()
-const sprite_texture = Texture2D.new()
+var sprite_texture = load("res://unrevealed.png")
 
 enum SquareState {
 	Safe,
 	Mine
 }
 
-class SimpleGridCoord:
+class SimpleGridCoord extends RefCounted:
 	var x: int
 	var y: int
 	
@@ -50,7 +50,10 @@ func draw_grid():
 			var sprite = Sprite2D.new()
 			var collision_shape = CollisionShape2D.new()
 			# Sprite is 32 pixels
-			sprite.texture = 
+			area.add_child(sprite)
+			area.add_child(collision_shape)
+			sprite.texture = sprite_texture
+			collision_shape.shape = RectangleShape2D.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
