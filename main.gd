@@ -3,7 +3,7 @@ extends Node
 var grid = []
 var rng = RandomNumberGenerator.new()
 var sprite_texture = load("res://unrevealed.png")
-var collision_shape = RectangleShape2D.new()
+var collision_shape_rect = RectangleShape2D.new()
 
 enum SquareState {
 	Safe,
@@ -54,15 +54,17 @@ func draw_grid():
 			area.add_child(sprite)
 			area.add_child(collision_shape)
 			sprite.texture = sprite_texture
-			collision_shape.shape = collision_shape
-			collision_shape.name = "%d-%d" % [row, col]
+			collision_shape.shape = collision_shape_rect
+			area.name = "%d-%d" % [row, col]
 			# Position describes the center
-			sprite.position = Vector2(row * 32, col * 32)
+			var pos = Vector2(row * 32, col * 32)
+			#sprite.position = Vector2(row * 32, col * 32)
+			area.position = pos
 			self.add_child(area)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	collision_shape.size = Vector2(32, 32)
+	collision_shape_rect.size = Vector2(32, 32)
 	generate_grid(10, 10, 10)
 	draw_grid()
 
@@ -70,5 +72,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("Entered!")
+
+func _on_collision_detector_area_entered(area: Area2D) -> void:
+	print("Entered!", area.name)

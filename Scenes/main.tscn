@@ -29,6 +29,10 @@ shape = SubResource("CapsuleShape2D_bo1nx")
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=719525719]
 zoom = Vector2(5, 5)
 
-[node name="FootSensor" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1827856172]
+[node name="CollisionDetector" type="Area2D" parent="CharacterBody2D" unique_id=901812510]
+
+[node name="FootSensor" type="CollisionShape2D" parent="CharacterBody2D/CollisionDetector" unique_id=1827856172]
 position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_21xkr")
+
+[connection signal="area_entered" from="CharacterBody2D/CollisionDetector" to="." method="_on_collision_detector_area_entered"]
