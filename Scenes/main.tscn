@@ -3,16 +3,12 @@
 [ext_resource type="Script" uid="uid://cjh4g1mgk5iqo" path="res://main.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://cb84ebujqpacf" path="res://Scenes/controls.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://iydna04xdvyi" path="res://player.png" id="1_jjgbg"]
-[ext_resource type="Texture2D" uid="uid://bpymabqmkpf8k" path="res://unrevealed.png" id="4_jjvhh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
 height = 34.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21xkr"]
 size = Vector2(10, 2)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kry3j"]
-size = Vector2(30, 30.5)
 
 [node name="Node2D" type="Node2D" unique_id=1776810823]
 script = ExtResource("1_8gbba")
@@ -36,15 +32,3 @@ zoom = Vector2(5, 5)
 [node name="FootSensor" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1827856172]
 position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_21xkr")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=653113668]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2133531944]
-position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_kry3j")
-
-[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=1493481332]
-position = Vector2(32, 32)
-texture = ExtResource("4_jjvhh")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
