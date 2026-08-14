@@ -62,16 +62,34 @@ func draw_grid():
 			area.position = pos
 			self.add_child(area)
 
+const grid_offsets = [
+	[0, 1], [0, -1],
+	[-1, 0], [-1, 1], [-1, -1],
+	[1, 0], [1, -1], [1, 1]
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	collision_shape_rect.size = Vector2(32, 32)
 	generate_grid(10, 10, 10)
 	draw_grid()
 
+func reveal(grid_coord: SimpleGridCoord):
+	var tile = grid[grid_coord.y][grid_coord.x]
+	if tile == SquareState.Mine:
+		# The tile is a mine
+		return -1
+	var mines_around = 0
+	for offset in grid_offsets:
+		
+
+func grid_coord_from_name(name: String):
+	var unpacked = name.split("-")
+	return SimpleGridCoord.new(unpacked[1], unpacked[0])
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_collision_detector_area_entered(area: Area2D) -> void:
-	print("Entered!", area.name)
+	pass
