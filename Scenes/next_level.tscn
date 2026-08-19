@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dsswootpmwm23"]
+
+[node name="Control" type="Control" unique_id=1341212091]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=242824867]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+color = Color(0.8901961, 0.5647059, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=931036372]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.018000001
+offset_left = 362.0
+offset_top = 102.0
+offset_right = 770.0
+offset_bottom = 209.318
+theme_override_font_sizes/font_size = 50
+text = "Level completed!"

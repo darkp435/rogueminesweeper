@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cjh4g1mgk5iqo" path="res://main.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://cb84ebujqpacf" path="res://Scenes/controls.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://iydna04xdvyi" path="res://player.png" id="1_jjgbg"]
+[ext_resource type="FontFile" uid="uid://co7hi64rhyojp" path="res://PressStart2P-Regular.ttf" id="4_jjvhh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
 height = 34.0
@@ -34,5 +35,42 @@ zoom = Vector2(5, 5)
 [node name="FootSensor" type="CollisionShape2D" parent="CharacterBody2D/CollisionDetector" unique_id=1827856172]
 position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_21xkr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1140694880]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1265955718]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Lives" type="Label" parent="CanvasLayer/Control" unique_id=1603544803]
+layout_mode = 0
+offset_right = 209.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("4_jjvhh")
+theme_override_font_sizes/font_size = 25
+text = "Lives: 3"
+
+[node name="Level" type="Label" parent="CanvasLayer/Control" unique_id=1484398198]
+layout_mode = 0
+offset_left = 281.0
+offset_right = 542.0
+offset_bottom = 93.0
+theme_override_fonts/font = ExtResource("4_jjvhh")
+theme_override_font_sizes/font_size = 25
+text = "Level 1"
+
+[node name="Remaining" type="Label" parent="CanvasLayer/Control" unique_id=1037338545]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 79.0
+theme_override_fonts/font = ExtResource("4_jjvhh")
+theme_override_font_sizes/font_size = 25
+text = "Tiles revealed: 0/90"
 
 [connection signal="area_entered" from="CharacterBody2D/CollisionDetector" to="." method="_on_collision_detector_area_entered"]
