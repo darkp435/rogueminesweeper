@@ -2,7 +2,8 @@ extends Node
 
 var grid = []
 var rng = RandomNumberGenerator.new()
-var sprite_texture = load("res://unrevealed.png")
+var sprite_texture = preload("res://unrevealed.png")
+var flag_texture = preload("res://flag.png")
 var collision_shape_rect = RectangleShape2D.new()
 var lives = 3
 var revealed = 0
@@ -74,6 +75,7 @@ func draw_grid():
 			sprite.texture = sprite_texture
 			collision_shape.shape = collision_shape_rect
 			area.name = "%d-%d" % [row, col]
+			area.set_meta("revealed", false)
 			# Position describes the center
 			var pos = Vector2(row * 32, col * 32)
 			#sprite.position = Vector2(row * 32, col * 32)
@@ -172,9 +174,11 @@ func _on_collision_detector_area_entered(area: Area2D) -> void:
 	if flag:
 		if area.name in flagged_tiles:
 			flagged_tiles.erase(area.name)
-			child.texture = load("res://unrevealed.png")
+			child.texture = sprite_texture
 		else:
-			
+			flagged_tiles.append(area.name)
+			child.texture = flag_texture
+		return
 		
 	var result = reveal(coord)
 	if result == MINE:
@@ -185,7 +189,7 @@ func _on_collision_detector_area_entered(area: Area2D) -> void:
 			$CharacterBody2D.speed = 0
 			$CharacterBody2D/Sprite2D.visible = false
 			
-		$CanvasLayer/Control/Lives.text = "Lives: " + str(lives)
+		$CanvasLayer/Control/Lives.text = str(lives)
 	else:
 		revealed += 1
 		redraw_remaining_label()
