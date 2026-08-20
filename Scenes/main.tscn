@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bpymabqmkpf8k" path="res://unrevealed.png" id="6_21xkr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
+radius = 9.0
 height = 34.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21xkr"]
@@ -21,7 +22,6 @@ script = ExtResource("1_bo1nx")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=769571223]
 z_index = 4096
-position = Vector2(-1.0000019, 0.9999999)
 scale = Vector2(0.9375, 0.9375)
 texture = ExtResource("1_jjgbg")
 
@@ -35,7 +35,7 @@ zoom = Vector2(5, 5)
 [node name="CollisionDetector" type="Area2D" parent="CharacterBody2D" unique_id=901812510]
 
 [node name="FootSensor" type="CollisionShape2D" parent="CharacterBody2D/CollisionDetector" unique_id=1827856172]
-position = Vector2(0, 13)
+position = Vector2(-1, 15)
 shape = SubResource("RectangleShape2D_21xkr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1140694880]
