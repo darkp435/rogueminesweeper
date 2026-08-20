@@ -45,18 +45,25 @@ func generate_mine(x: int, y: int):
 	var mine_y = rng.randi_range(0, y - 1)
 	return SimpleGridCoord.new(mine_x, mine_y)
 
+func has_coord(list, coord_to_check: SimpleGridCoord):
+	for coord in list:
+		if coord_to_check.equal(coord):
+			return true
+	return false
+
 func generate_grid(x: int, y: int, mines: int):
+	grid = []
 	var mines_list = []
 	
 	for _i in range(mines):
 		var mine = generate_mine(x, y)
-		while mine in mines_list:
+		while has_coord(mines_list, mine):
 			mine = generate_mine(x, y)
 		mines_list.append(mine)
 	
-	for _j in range(x):
+	for _j in range(y):
 		var row_to_append = []
-		for _k in range(y):
+		for _k in range(x):
 			row_to_append.append(SquareState.Safe)
 		grid.append(row_to_append)
 		
@@ -77,7 +84,7 @@ func draw_grid():
 			area.name = "%d-%d" % [row, col]
 			area.set_meta("revealed", false)
 			# Position describes the center
-			var pos = Vector2(row * 32, col * 32)
+			var pos = Vector2(col * 32, row * 32)
 			#sprite.position = Vector2(row * 32, col * 32)
 			area.position = pos
 			self.add_child(area)
@@ -93,8 +100,9 @@ func _ready() -> void:
 	#if not FileAccess.file_exists("res://2025 Introduction to Organic Chemistry.pptx"):
 		#OS.crash("FILE NOT FOUND")
 	collision_shape_rect.size = Vector2(32, 32)
-	$CharacterBody2D.position = Vector2(32 * 5, 32 * 10)
+	#$CharacterBody2D.position = Vector2(32 * 5, 32 * 10)
 	generate_grid(grid_x, grid_y, grid_mines)
+	redraw_remaining_label()
 	draw_grid()
 
 func on_grid(x, y):
@@ -112,8 +120,11 @@ func redraw_remaining_label():
 	$CanvasLayer/Control/Remaining.text = "Tiles revealed: %d/%d" % [revealed, grid_x * grid_y - grid_mines]
 
 func next_level():
+	$CharacterBody2D.position = Vector2(99999999, 0)
 	level += 1
+	flagged_tiles = []
 	destroy_grid()
+	#await get_tree().create_timer(2.5).timeout
 	$CanvasLayer/Control/Level.text = "Level " + str(level)
 	# Either width or height gets increased, randomly
 	if rng.randi_range(1, 2) == 1:
@@ -123,9 +134,12 @@ func next_level():
 	
 	grid_mines += rng.randi_range(1, 5)
 	generate_grid(grid_x, grid_y, grid_mines)
+	# Delay for queue_free
+	await get_tree().create_timer(0.1).timeout
 	draw_grid()
 	redraw_remaining_label()
 	revealed = 0
+	$CharacterBody2D.position = Vector2(0, 0)
 
 func reveal(grid_coord: SimpleGridCoord):
 	var x = grid_coord.x
@@ -163,13 +177,19 @@ const MINE = -1
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("flag"):
 		flag = not flag
+		if flag:
+			$CanvasLayer/Control/RevealMode.texture = flag_texture
+		else:
+			$CanvasLayer/Control/RevealMode.texture = sprite_texture
 
 func _on_collision_detector_area_entered(area: Area2D) -> void:
 	var child = area.get_child(0)
-	var coord = grid_coord_from_name(area.name)
-	
 	if not child is Sprite2D or area.get_meta("revealed") or (not flag and area.name in flagged_tiles):
 		return
+	if len(area.name.split("-")) != 2:
+		print("Not a valid name ", area.name)
+		return
+	var coord = grid_coord_from_name(area.name)
 	
 	if flag:
 		if area.name in flagged_tiles:
@@ -198,4 +218,4 @@ func _on_collision_detector_area_entered(area: Area2D) -> void:
 	area.set_meta("revealed", true)
 	
 	if revealed == grid_x * grid_y - grid_mines:
-		next_level()
+		call_deferred("next_level")
