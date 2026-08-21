@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://co7hi64rhyojp" path="res://PressStart2P-Regular.ttf" id="4_jjvhh"]
 [ext_resource type="Texture2D" uid="uid://bdk8mrdreijbv" path="res://heart.png" id="5_kry3j"]
 [ext_resource type="Texture2D" uid="uid://bpymabqmkpf8k" path="res://unrevealed.png" id="6_21xkr"]
+[ext_resource type="Texture2D" uid="uid://rvjjf5khvue0" path="res://dirt.png" id="7_6bp64"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
 radius = 9.0
@@ -13,6 +14,16 @@ height = 34.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21xkr"]
 size = Vector2(10, 2)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_344ge"]
+texture = ExtResource("7_6bp64")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ohfy3"]
+sources/0 = SubResource("TileSetAtlasSource_344ge")
 
 [node name="Node2D" type="Node2D" unique_id=1776810823]
 script = ExtResource("1_8gbba")
@@ -30,7 +41,7 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_bo1nx")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=719525719]
-zoom = Vector2(5, 5)
+zoom = Vector2(4, 4)
 
 [node name="CollisionDetector" type="Area2D" parent="CharacterBody2D" unique_id=901812510]
 
@@ -85,13 +96,18 @@ offset_top = -5.0
 offset_right = 90.0
 offset_bottom = 45.0
 texture = ExtResource("5_kry3j")
+metadata/_edit_use_anchors_ = true
 
 [node name="RevealMode" type="TextureRect" parent="CanvasLayer/Control" unique_id=1145343469]
 layout_mode = 0
 offset_left = 3.0
-offset_top = 4.0
+offset_top = -1.0
 offset_right = 39.0
-offset_bottom = 40.0
+offset_bottom = 35.0
 texture = ExtResource("6_21xkr")
+metadata/_edit_use_anchors_ = true
+
+[node name="NotGrid" type="TileMapLayer" parent="." unique_id=349614428]
+tile_set = SubResource("TileSet_ohfy3")
 
 [connection signal="area_entered" from="CharacterBody2D/CollisionDetector" to="." method="_on_collision_detector_area_entered"]

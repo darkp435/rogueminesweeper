@@ -88,12 +88,35 @@ func draw_grid():
 			#sprite.position = Vector2(row * 32, col * 32)
 			area.position = pos
 			self.add_child(area)
+	
+	draw_tile_map()
 
 const grid_offsets = [
 	[0, 1], [0, -1],
 	[-1, 0], [-1, 1], [-1, -1],
 	[1, 0], [1, -1], [1, 1]
 ]
+
+const TILE_BORDER = 2
+const TOP_OFFSET = -2
+const LEFT_OFFSET = -2
+# Draws the tile map.
+# - Each tile will be 1/2 the size of a minesweeper tile.
+# - (-2, -2) is the starting coordinate, denoting the top
+#   left of the top left minesweeper tile.
+func draw_tile_map():
+	# Top row
+	for tile in range(grid_x):
+		var x_coord = tile * 2
+		$NotGrid.set_cell(Vector2i(x_coord, TOP_OFFSET), 0, Vector2i(0, 0))
+		$NotGrid.set_cell(Vector2i(x_coord - 1, TOP_OFFSET), 0, Vector2i(0, 0))
+	# Left column
+	for tile in range(grid_y):
+		var y_coord = tile * 2
+		$NotGrid.set_cell(Vector2i(LEFT_OFFSET, y_coord), 0, Vector2i(0, 0))
+		$NotGrid.set_cell(Vector2i(LEFT_OFFSET, y_coord - 1), 0, Vector2i(0, 0))
+	#$NotGrid.set_cell(Vector2i(-2, 0), 0, Vector2i(0, 0))
+	#$NotGrid.set_cell(Vector2i(-2, -2), 0, Vector2i(0, 0))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
